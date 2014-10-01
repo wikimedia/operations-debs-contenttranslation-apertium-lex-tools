@@ -1,0 +1,6 @@
+apertium-lex-tools (0.1.0+svn~57414-1) trusty; urgency=low
+
+  [ Tino Didriksen ]
+  * Initial release based on upstream SVN.
+
+ -- Kartik Mistry <kartik@debian.org>  Wed, 01 Oct 2014 16:50:33 +0530
