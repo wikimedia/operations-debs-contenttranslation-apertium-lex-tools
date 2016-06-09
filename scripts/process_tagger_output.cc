@@ -8,14 +8,14 @@
 
 #include <cwchar>
 #include <set>
-#include <apertium/tagger.h>
+//#include <apertium/tagger.h>
 #include <apertium/tsx_reader.h>
 #include <apertium/string_utils.h>
 
 using namespace std;
 
 int find(vector<wstring> xs, wstring x) {
-	for (int i = 0; i < xs.size(); i++) {
+	for (size_t i = 0; i < xs.size(); i++) {
 		if (xs[i] == x)
 			return i;
 	}
@@ -23,13 +23,10 @@ int find(vector<wstring> xs, wstring x) {
 
 }
 
-FSTProcessor loadBilingual(char **argv) {
+FSTProcessor loadBilingual(char *path) {
 	FSTProcessor bilingual;
 
-	std::string resources_path(argv[1]);
-	std::string direction(argv[2]);
-
-	FILE *f_bin = fopen((resources_path + direction + ".autobil.bin").c_str(), "r");
+	FILE *f_bin = fopen(path, "r");
 	bilingual.load(f_bin);
 	fclose(f_bin);
 	bilingual.initBiltrans();
@@ -40,7 +37,7 @@ vector<wstring> parseTags(wstring token) {
 	int state = 0; // outside
 	vector<wstring> tags;
 	wstring buffer;
-	for(int i = 0; i < token.size(); i++) {
+	for (size_t i = 0; i < token.size(); i++) {
 		wchar_t c = token[i];
 		if (state == 0) {
 			if (c == '<') {
@@ -54,7 +51,7 @@ vector<wstring> parseTags(wstring token) {
 			} else {
 				buffer += c;
 			}
-		} 
+		}
 	}
 	return tags;
 }
@@ -63,7 +60,7 @@ vector<wstring> wsplit(wstring wstr, wchar_t delim) {
 	vector<wstring> tokens;
 	wstring buffer;
 
-	for(int i = 0; i < wstr.size(); i++) {
+	for (size_t i = 0; i < wstr.size(); i++) {
 		buffer += wstr[i];
 		if(wstr[i] == delim) {
 			tokens.push_back(buffer);
@@ -79,7 +76,7 @@ vector<wstring> wsplit(wstring wstr, wchar_t delim) {
 
 wstring getLemma(wstring token) {
 	wstring buffer;
-	for(int i = 0; i < token.size(); i++) {
+	for (size_t i = 0; i < token.size(); i++) {
 		if(token[i] != '<') {
 			buffer += token[i];
 		} else {
@@ -98,7 +95,7 @@ void processTaggerOutput(FSTProcessor *bilingual) {
 	wchar_t c;
 	bilingual->setBiltransSurfaceForms(true);
 	while((wcin.get(c)) != NULL) {
-		
+
 		if (state == 0) {
 			if (c == '^' && !escaped) {
 				state = 1; // inside
@@ -120,7 +117,7 @@ void processTaggerOutput(FSTProcessor *bilingual) {
 				vector<wstring> trimmedTags = parseTags(targetTrimmed);
 				vector<wstring> newTags;
 
-				for (int i = 0; i < sourceTags.size(); i++) {
+				for (size_t i = 0; i < sourceTags.size(); i++) {
 					wstring sourceTag = sourceTags[i];
 					int idx_1 = find(targetTags, sourceTag);
 					int idx_2 = find(trimmedTags, sourceTag);
@@ -129,7 +126,7 @@ void processTaggerOutput(FSTProcessor *bilingual) {
 					}
 				}
 				wcout << getLemma(buffer);
-				for(int i = 0; i < newTags.size(); i++) {
+				for (size_t i = 0; i < newTags.size(); i++) {
 					wcout << '<' << newTags[i] << '>';
 				}
 				targetTrimmed[0] = '/';
@@ -138,7 +135,7 @@ void processTaggerOutput(FSTProcessor *bilingual) {
 					wcout << L"/" + buffer + L"$";
 				} else {
 					vector<wstring> tokens = wsplit(targetTrimmed, '/');
-					for(int i = 0; i < tokens.size(); i++) {
+					for (size_t i = 0; i < tokens.size(); i++) {
 						wcout << tokens[i];
 					}
 				}
@@ -161,17 +158,15 @@ void processTaggerOutput(FSTProcessor *bilingual) {
 
 int main(int argc, char **argv)
 {
-	if(argc != 3) { 
-		wcout << L"Usage: " << argv[0] << "<language pair resources> <direction>"<< endl;
+	if(argc != 2) {
+		wcout << L"Usage: " << argv[0] << " bidix_bin_file" << endl;
+		wcout << L"with output from pretransfer on standard input." << endl;
 		exit(-1);
 	}
 
     LtLocale::tryToSetLocale();
-	FSTProcessor bilingual = loadBilingual(argv);
+	FSTProcessor bilingual = loadBilingual(argv[1]);
 	processTaggerOutput(&bilingual);
 
 	return 0;
 }
-
-
-

@@ -8,7 +8,12 @@ MultiTranslator::MultiTranslator(string path, string mode, bool trimmed, bool fi
 	this->path = path;
 	this->mode = mode;
 
-	FILE *f_bin = fopen(path.c_str(), "r");
+	FILE *f_bin = fopen(path.c_str(), "rb");
+	if(!f_bin)
+	{
+		cerr << "Error: Could not open file '" << path << "'." << endl;
+		exit(EXIT_FAILURE);
+	}
 	bilingual.load(f_bin);
 	fclose(f_bin);
 	bilingual.initBiltrans();
@@ -88,8 +93,28 @@ BiltransToken MultiTranslator::getTrimmedToken(wstring source)
 		return ttoken;
 	}
 
-	wstring fstr = bilingual.biltrans(source, false);
-	wstring tstr = bilingual.biltransWithoutQueue(source, false);
+        /*---------------------------------------------*/
+        
+        // This code is to attempt to avoid memory leak problems when calling
+        // the bilingual.* methods in FSTProcessor. Unknown why we get the 
+        // leaks in the first place...
+
+        wstring fstr = L"";
+        wstring tstr = L"";
+
+	if((f_cache.find(source) == f_cache.end())) 
+        {
+	  f_cache[source] = bilingual.biltrans(source, false);
+        }
+	if((t_cache.find(source) == t_cache.end())) 
+        {
+	  t_cache[source] = bilingual.biltransWithoutQueue(source, false);
+        }
+
+        fstr = f_cache[source];
+        tstr = t_cache[source];
+
+        /*---------------------------------------------*/
 
 	if (fstr == L"") {
 		fstr = L"@" + source;
@@ -178,7 +203,6 @@ void MultiTranslator::printTaggerOutput(int n, vector<BiltransToken> sentence) {
 void MultiTranslator::processSentence(vector<TaggerToken> sentence) {
 
 	vector<BiltransToken> outputSentence;
-	bool isAmbig = false;
 	bool hasAmbigPos = false;
 	int numberOfUnknown = 0;
 	int fertility = 1;
@@ -193,9 +217,6 @@ void MultiTranslator::processSentence(vector<TaggerToken> sentence) {
 			bt = getFullToken(token);
 		}
 
-		if (bt.targetTokens.size() > 1) {
-			isAmbig = true;
-		}
 		if (isPosAmbig(bt)) {
 			hasAmbigPos = true;
 		}
