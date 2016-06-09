@@ -4,13 +4,16 @@ m4_define([required_libxml_version], [2.6.17])
 m4_define([required_apertium_version], [3.2.0])
 m4_define([required_lttoolbox_version], [3.2.0])
 
-AC_INIT([apertium-lex-tools], [0.1.0], [ftyers@prompsit.com])
-AM_INIT_AUTOMAKE([apertium-lex-tools], [0.1.0], no-define)
+AC_INIT([apertium-lex-tools], [0.1.1], [ftyers@prompsit.com])
+AM_INIT_AUTOMAKE([apertium-lex-tools], [0.1.1], no-define)
 AC_CONFIG_HEADER([lrx_config.h])
 
 AC_PROG_CXX
 AM_SANITY_CHECK
 AC_LANG_CPLUSPLUS
+
+CFLAGS="-Wall -Wextra $CFLAGS"
+CXXFLAGS="-Wall -Wextra $CXXFLAGS"
 
 AC_ARG_ENABLE(debug,
               [  --enable-debug  Enable "-g -Wall" compiler options],

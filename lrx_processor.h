@@ -12,9 +12,7 @@
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
- * 02111-1307, USA.
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LRX_PROCESSOR_H__
@@ -116,6 +114,12 @@ private:
 		    pair<double, vector<State> > &empty_seq,
 		    map<pair<int, int>, vector<State> > &spans,
 		    int last_final);
+
+  void processFlushME(FILE *output,
+                      map<int, wstring > &sl,
+                      map<int, vector<wstring> > &tl,
+                      map<int, wstring > &blanks,
+                      map<int, map<wstring, double> > &scores);
 
 public:
   static wstring const LRX_PROCESSOR_TAG_SELECT;

@@ -1,3 +1,5 @@
+// -*- mode: c++ -*-
+
 #ifndef BILTRANS_WITHOUT_QUEUE
 #define BILTRANS_WITHOUT_QUEUE
 
@@ -30,6 +32,8 @@ public:
 class MultiTranslator : public TaggerOutputProcessor {
 private:
 	FSTProcessor bilingual;
+	map<wstring, wstring> f_cache;
+	map<wstring, wstring> t_cache;
 	string path;
 
 	bool trimmed;
