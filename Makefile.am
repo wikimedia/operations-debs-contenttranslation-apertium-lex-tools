@@ -10,6 +10,7 @@ lrx_proc_SOURCES = lrx_processor.cc lrx_proc.cc
 
 multitrans_SOURCES = tagger_output_processor.cc multi_translator.cc multitrans.cc
 
+# g++ -Wall -Wextra -O3 -std=c++98 yasmet.cc -o yasmet
 if HAVE_YASMET
     yasmet_SOURCES = yasmet.cc
     bin_PROGRAMS += yasmet
@@ -20,4 +21,4 @@ if HAVE_IRSTLM
     bin_PROGRAMS += irstlm_ranker
 endif
 
-
+EXTRA_DIST = lrx_compiler.h lrx_processor.h multi_translator.h tagger_output_processor.h
