@@ -1,3 +1,17 @@
+apertium-lex-tools (0.2.0~r84344-1+wmf1) jessie-wikimedia; urgency=low
+
+  * New upstream release.
+  * debian/control:
+    + Updated Vcs-* URLs.
+    + Build-Depends on apertium-dev (>= 3.5.0~)
+  * Updated debian/copyright.
+  * Updated debian/watch file.
+  * Install examples.
+  * URLs: http->https.
+  * Added Hardening support.
+
+ -- Kartik Mistry <kartik@debian.org>  Thu, 22 Mar 2018 15:02:28 +0530
+
 apertium-lex-tools (0.1.1~r66150-1+wmf1) jessie; urgency=low
 
   * Rebuild for Jessie
