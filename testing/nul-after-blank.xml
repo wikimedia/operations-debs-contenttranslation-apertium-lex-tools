@@ -1,3 +1,0 @@
-<rules>
-  <rule><match lemma="just" tags="*"><select lemma="sólo"/></match></rule>
-</rules>
