@@ -1,3 +1,10 @@
+apertium-lex-tools (0.2.1-1+wmf1) jessie-wikimedia; urgency=low
+
+  * New upstream release.
+  * Depends on apertium >= 3.5.2
+
+ -- Kartik Mistry <kartik@debian.org>  Wed, 17 Oct 2018 09:29:33 +0530
+
 apertium-lex-tools (0.2.0~r84344-1+wmf1) jessie-wikimedia; urgency=low
 
   * New upstream release.
