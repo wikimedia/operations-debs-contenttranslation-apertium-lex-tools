@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011--2012 Universitat d'Alacant 
+ * Copyright (C) 2011--2012 Universitat d'Alacant
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -66,7 +66,7 @@ public:
 		} else {
 			out = blanks + out;
 		}
-		return out;	
+		return out;
 	}
 };
 
@@ -84,7 +84,7 @@ private:
 
   vector<State> alive_states;
 
-  set<Node *> anfinals;
+  map<Node *, double> anfinals;
   set<wchar_t> escaped_chars;
   State *initial_state;
 
@@ -93,7 +93,7 @@ private:
   bool nullFlush;
   bool outOfWord;
 
-  unsigned int pos; 
+  unsigned int pos;
   unsigned long lineno;
 
   wstring itow(int i);
@@ -107,13 +107,13 @@ private:
   void evaluateRules();
 
   void processFlush(FILE *output,
-		    map<int, wstring > &sl,
-		    map<int, vector<wstring> > &tl,
-		    map<int, wstring > &blanks,
-		    map<int, pair<double, vector<State> > > &covers,
-		    pair<double, vector<State> > &empty_seq,
-		    map<pair<int, int>, vector<State> > &spans,
-		    int last_final);
+                    map<int, wstring > &sl,
+                    map<int, vector<wstring> > &tl,
+                    map<int, wstring > &blanks,
+                    map<int, pair<double, vector<State> > > &covers,
+                    pair<double, vector<State> > &empty_seq,
+                    map<pair<int, int>, vector<State> > &spans,
+                    int last_final);
 
   void processFlushME(FILE *output,
                       map<int, wstring > &sl,
@@ -141,4 +141,3 @@ public:
 };
 
 #endif /* __LRX_PROCESSOR_H__ */
-
