@@ -55,9 +55,12 @@ private:
   map<wstring, Transducer> recognisers; // keyed on pattern
   map<int, double> weights; // keyed on rule id
 
+  map<wstring, Transducer> sequences;
+
   int initialState;
   int lastState;
   int currentState;
+  bool canSelect; // disallow <select>, <remove> inside <def-seq>, <repeat>
 
   int currentRuleId;
 
@@ -70,10 +73,13 @@ private:
   void procList();
   void procListMatch();
   void procRule();
+  void procDefSeq();
   void procOr();
   void procMatch();
   void procSelect();
   void procRemove();
+  void procRepeat();
+  void procSeq();
 
   wstring attrib(wstring const &name);
 
@@ -82,12 +88,17 @@ private:
   double wtod(wstring);
 
 public:
+  static wstring const LRX_COMPILER_LRX_ELEM;
+  static wstring const LRX_COMPILER_DEFSEQS_ELEM;
+  static wstring const LRX_COMPILER_DEFSEQ_ELEM;
   static wstring const LRX_COMPILER_RULES_ELEM;
   static wstring const LRX_COMPILER_RULE_ELEM;
   static wstring const LRX_COMPILER_MATCH_ELEM;
   static wstring const LRX_COMPILER_SELECT_ELEM;
   static wstring const LRX_COMPILER_REMOVE_ELEM;
   static wstring const LRX_COMPILER_OR_ELEM;
+  static wstring const LRX_COMPILER_REPEAT_ELEM;
+  static wstring const LRX_COMPILER_SEQ_ELEM;
 
   static wstring const LRX_COMPILER_SURFACE_ATTR;
   static wstring const LRX_COMPILER_LEMMA_ATTR;
@@ -95,6 +106,8 @@ public:
   static wstring const LRX_COMPILER_COMMENT_ATTR;
   static wstring const LRX_COMPILER_NAME_ATTR;
   static wstring const LRX_COMPILER_WEIGHT_ATTR;
+  static wstring const LRX_COMPILER_FROM_ATTR;
+  static wstring const LRX_COMPILER_UPTO_ATTR;
 
   static wstring const LRX_COMPILER_TYPE_SELECT;
   static wstring const LRX_COMPILER_TYPE_REMOVE;
