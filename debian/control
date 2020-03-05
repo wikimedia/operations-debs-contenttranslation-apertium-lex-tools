@@ -4,14 +4,16 @@ Priority: optional
 Maintainer: Debian Science Team <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Tino Didriksen <tino@didriksen.cc>,
            Kartik Mistry <kartik@debian.org>
-Build-Depends: apertium-dev (>= 3.5.2),
+Build-Depends: apertium-dev (>= 3.6.0),
                autotools-dev,
                debhelper (>= 9),
                dh-autoreconf,
                dpkg-dev (>= 1.16.1.1),
                libxml2-dev,
                libxml2-utils,
-               pkg-config (>= 0.21),
+               lttoolbox-dev (>= 3.5.1),
+               pkg-config,
+               swig,
                zlib1g-dev
 Standards-Version: 3.9.6
 Homepage: https://apertium.org/
@@ -22,5 +24,5 @@ Package: apertium-lex-tools
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Constraint-based lexical selection module
- This package provides a module for compiling lexical selection rules and
- processing them in the pipeline.
+ Module for compiling lexical selection rules and processing them in the
+ pipeline.

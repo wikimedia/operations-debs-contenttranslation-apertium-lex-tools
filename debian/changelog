@@ -1,3 +1,9 @@
+apertium-lex-tools (0.2.3-1+wmf1) jessie-wikimedia; urgency=low
+
+  * New upstream release.
+
+ -- Kartik Mistry <kartik@debian.org>  Thu, 05 Mar 2020 10:16:09 +0530
+
 apertium-lex-tools (0.2.1-1+wmf1) jessie-wikimedia; urgency=low
 
   * New upstream release.
